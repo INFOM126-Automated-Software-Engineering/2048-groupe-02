@@ -1,3 +1,0 @@
-Carine Pochet
-Antonin
-Kevin
