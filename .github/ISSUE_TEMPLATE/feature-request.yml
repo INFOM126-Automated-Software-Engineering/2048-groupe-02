@@ -46,8 +46,8 @@ body:
     attributes:
       label: "Are you willing to help implement this feature?"
       options:
-        - "Yes, I would like to contribute to this feature"
+        - "Yes, I would like to contribute"
         - "Yes, but I need guidance"
-        - "No, I’m just suggesting the feature"
+        - "No, It's just a suggestion"
     validations:
       required: true

@@ -24,10 +24,10 @@ jobs:
           if [[ "$ISSUE_BODY" == *"Yes, I would like to contribute"* ]]; then
             gh issue comment $ISSUE_NUMBER --body "Thank you for volunteering to contribute! Please refer to our [Contributor's Guide](docs/CONTRIBUTOR.md) if you need help to get started. If you have any questions, feel free to contact us!"
             gh issue edit $ISSUE_NUMBER --add-label "contribution intent"
-          elif [[ "$ISSUE_BODY" == *"Yes, but I’m not sure how to contribute"* ]]; then
+          elif [[ "$ISSUE_BODY" == *"Yes, but I need guidance"* ]]; then
             gh issue comment $ISSUE_NUMBER --body "Thanks for your interest in contributing! It looks like you'd like some help to get started. Please refer to our [Contributor's Guide](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/blob/main/docs/CONTRIBUTOR.md) for more information, and feel free to ask questions! We have tagged this issue with 'Help requested' to get the attention of our contributors."
             gh issue edit $ISSUE_NUMBER --add-label "help requested"
-          elif [[ "$ISSUE_BODY" == *"No, I just want to suggest the improvement"* ]]; then
+          elif [[ "$ISSUE_BODY" == *"No, It's just a suggestion"* ]]; then
             echo "No action needed as the user does not want to contribute."
           else
             echo "No recognized response in issue body."

@@ -37,8 +37,8 @@ body:
     attributes:
       label: "Are you willing to submit a pull request to implement this change?"
       options:
-        - "Yes, I would like to contribute to this change"
-        - "Yes, but I'm not sure how to make the changes"
-        - "No, I just want to suggest the improvement"
+        - "Yes, I would like to contribute"
+        - "Yes, but I need guidance"
+        - "No, It's just a suggestion"
     validations:
       required: true
