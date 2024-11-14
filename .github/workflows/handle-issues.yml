@@ -8,15 +8,11 @@ jobs:
   tag-and-comment:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up GitHub CLI authentication
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GitHub CLI authenticated."
-
       - name: Check user contribution preference
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Define the messages and labels based on the user's choice
           if [[ "$ISSUE_BODY" == *"Yes, I would like to contribute"* ]]; then
