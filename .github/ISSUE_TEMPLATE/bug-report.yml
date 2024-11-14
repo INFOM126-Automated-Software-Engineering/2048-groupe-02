@@ -1,6 +1,6 @@
 name: "🐞 Bug Report"
 description: "Report a bug or issue with the project."
-title: "Bug Report: [Brief description of the issue]"
+title: "Title (Brief description of the issue)"
 labels: 
   - bug
   - triage required
