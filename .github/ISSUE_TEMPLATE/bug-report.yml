@@ -1,0 +1,51 @@
+name: "🐞 Bug Report"
+description: "Report a bug or issue with the project."
+title: "Bug Report: [Brief description of the issue]"
+labels: 
+  - bug
+  - triage required
+body:
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: "Description"
+      description: "Provide a clear and concise description of the issue. Describe what you were trying to achieve and any relevant context."
+      placeholder: "Describe the issue in detail here."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: "Steps to Reproduce"
+      description: "List the steps or provide minimal code needed to reproduce the issue. Be as minimal and specific as possible; it helps us address the issue faster."
+      placeholder: "1. Go to...\n2. Run the following code...\n3. Observe the issue..."
+    validations:  
+      required: true
+
+  - type: textarea
+    id: expected_result
+    attributes:
+      label: "Expected Result"
+      description: "Describe what you expected to happen when running the steps above."
+      placeholder: "What did you expect to happen?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_result
+    attributes:
+      label: "Actual Result and Error Message"
+      description: "Describe what actually happened. If there was an error message, provide the full error message and traceback (if applicable)."
+      placeholder: "Describe the actual result here, and include any error messages or traceback if available."
+    validations:  
+      required: true
+
+  - type: input
+    id: package_version
+    attributes:
+      label: "Version of the Package"
+      description: "Specify the version of the package you are using. You can find all our releases [here](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/releases)"
+      placeholder: "Example: v1.2.3"
+    validations:
+      required: true

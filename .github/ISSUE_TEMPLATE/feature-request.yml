@@ -1,0 +1,53 @@
+name: "✨ Feature Request"
+description: "Suggest a new feature or enhancement for the project."
+title: "Title (Brief description of the feature)"
+labels: 
+  - feature request
+  - triage required
+body:
+  - type: textarea
+    id: feature_description
+    attributes:
+      label: "Describe the feature or enhancement"
+      description: "Provide a detailed description of the feature you'd like to see added to the project."
+      placeholder: "Describe the feature or enhancement in detail."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: "Motivation"
+      description: "Explain why this feature would be useful or how it would improve the project."
+      placeholder: "Explain why this feature is needed and any problems it would solve."
+    validations:  
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Describe any alternative solutions you've considered"
+      description: "If there are alternative solutions or workarounds, please describe them here."
+      placeholder: "Describe any other approaches you considered."
+    validations:  
+      required: false
+
+  - type: input
+    id: feature_location
+    attributes:
+      label: "Related area or module (if applicable)"
+      description: "Specify where in the project this feature would apply, such as a specific module or component."
+      placeholder: "Example: Frontend/UI, API endpoint, etc."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willing_to_contribute
+    attributes:
+      label: "Are you willing to help implement this feature?"
+      options:
+        - "Yes, I would like to contribute to this feature"
+        - "Yes, but I need guidance"
+        - "No, I’m just suggesting the feature"
+    validations:
+      required: true

@@ -3,7 +3,7 @@ description: "Suggest an improvement or update to the documentation."
 title: "Title (Brief description of the improvement)"
 labels: 
   - documentation
-  - enhancement
+  - triage required
 body:
   - type: textarea
     id: issue_description
