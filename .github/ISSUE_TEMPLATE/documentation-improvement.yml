@@ -11,6 +11,7 @@ body:
       label: "Describe the issue linked to the documentation"
       description: "Tell us about the confusion introduced in the documentation."
       placeholder: "Provide a detailed description of the issue here."
+    validations:
       required: true
 
   - type: textarea
@@ -19,6 +20,7 @@ body:
       label: "Suggest a potential alternative/fix"
       description: "Tell us how we could improve the documentation in this regard."
       placeholder: "Describe your suggested changes here."
+    validations:  
       required: true
 
   - type: input
@@ -27,6 +29,7 @@ body:
       label: "Location of the documentation"
       description: "Provide the URL or file path to the specific section in the documentation."
       placeholder: "Example: https://github.com/your-repo/docs/..."
+    validations:
       required: true
 
   - type: dropdown
@@ -37,4 +40,5 @@ body:
         - "Yes, I would like to contribute this change"
         - "No, I’m not sure how to make the changes"
         - "No, I just want to suggest the improvement"
+    validations:
       required: true
