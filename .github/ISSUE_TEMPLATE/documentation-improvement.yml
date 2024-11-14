@@ -1,0 +1,40 @@
+name: "📄 Documentation Improvement"
+description: "Suggest an improvement or update to the documentation."
+title: "[DOCS] <Brief description of the improvement>"
+labels: 
+  - documentation
+  - enhancement
+body:
+  - type: textarea
+    id: issue_description
+    attributes:
+      label: "Describe the issue linked to the documentation"
+      description: "Tell us about the confusion introduced in the documentation."
+      placeholder: "Provide a detailed description of the issue here."
+      required: true
+
+  - type: textarea
+    id: improvement_suggestion
+    attributes:
+      label: "Suggest a potential alternative/fix"
+      description: "Tell us how we could improve the documentation in this regard."
+      placeholder: "Describe your suggested changes here."
+      required: true
+
+  - type: input
+    id: documentation_location
+    attributes:
+      label: "Location of the documentation"
+      description: "Provide the URL or file path to the specific section in the documentation."
+      placeholder: "Example: https://github.com/your-repo/docs/..."
+      required: true
+
+  - type: dropdown
+    id: willing_to_contribute
+    attributes:
+      label: "Are you willing to submit a pull request to implement this change?"
+      options:
+        - "Yes, I would like to contribute this change"
+        - "No, I’m not sure how to make the changes"
+        - "No, I just want to suggest the improvement"
+      required: true
