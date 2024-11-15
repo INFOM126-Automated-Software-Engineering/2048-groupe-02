@@ -1,0 +1,28 @@
+name: Handle blank issues
+
+on:
+    issues:
+        types: [opened]
+
+jobs:
+    tag-and-comment:
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v4
+
+            - name: Check if issue has labels and add "triage required" if blank
+              env:
+                ISSUE_NUMBER: ${{ github.event.issue.number }}
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                # Fetch the issue details and check if it has any labels
+                ISSUE_LABELS=$(gh issue view $ISSUE_NUMBER --json labels --jq '.labels | length')
+
+                # Add the "triage required" label only if the issue has no labels
+                if [ "$ISSUE_LABELS" -eq 0 ]; then
+                    gh issue edit $ISSUE_NUMBER --add-label "triage required"
+                fi
