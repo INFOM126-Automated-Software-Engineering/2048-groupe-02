@@ -1,4 +1,4 @@
-name: Handle default issues
+name: Handle Feature Request Issues
 
 on:
   issues:
@@ -9,26 +9,38 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Check user contribution preference
+      - name: Get the issue details
         env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Define the messages and labels based on the user's choice
-          if [[ "$ISSUE_BODY" == *"Yes, I would like to contribute"* ]]; then
+          # Fetch the issue's JSON data from the GitHub API
+          ISSUE_DATA=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}")
+          
+          # Extract the JSON field corresponding to 'willing_to_contribute' using jq
+          # This assumes that the 'willing_to_contribute' field is a structured JSON element in the body.
+          WILLING_TO_CONTRIBUTE=$(echo "$ISSUE_DATA" | jq -r '.body | match("willing_to_contribute:.*") | .string' | sed 's/willing_to_contribute: //g')
+
+          # Perform actions based on the selected option in the dropdown
+          if [[ "$WILLING_TO_CONTRIBUTE" == "Yes, I would like to contribute" ]]; then
             gh issue comment $ISSUE_NUMBER --body "Thank you for volunteering to contribute! Please refer to our [Contributor's Guide](docs/CONTRIBUTOR.md) if you need help to get started. If you have any questions, feel free to contact us!"
             gh issue edit $ISSUE_NUMBER --add-label "contribution intent"
-          elif [[ "$ISSUE_BODY" == *"Yes, but I need guidance"* ]]; then
+          
+          elif [[ "$WILLING_TO_CONTRIBUTE" == "Yes, but I need guidance" ]]; then
             gh issue comment $ISSUE_NUMBER --body "Thanks for your interest in contributing! It looks like you'd like some help to get started. Please refer to our [Contributor's Guide](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/blob/main/docs/CONTRIBUTOR.md) for more information, and feel free to ask questions! We have tagged this issue with 'Help requested' to get the attention of our contributors."
             gh issue edit $ISSUE_NUMBER --add-label "help requested"
-          elif [[ "$ISSUE_BODY" == *"No, It's just a suggestion"* ]]; then
-            echo "No action needed as the user does not want to contribute."
+          
+          elif [[ "$WILLING_TO_CONTRIBUTE" == "No, It's just a suggestion" ]]; then
+            gh issue comment $ISSUE_NUMBER --body "Thanks for the suggestion! We will review it and see if it can be implemented."
+            gh issue edit $ISSUE_NUMBER --add-label "suggestion"
+          
           else
-            echo "No recognized response in issue body."
+            gh issue comment $ISSUE_NUMBER --body "Thanks for your input! We will review the details."
+            gh issue edit $ISSUE_NUMBER --add-label "needs review"
           fi
