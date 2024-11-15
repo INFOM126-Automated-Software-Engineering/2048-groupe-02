@@ -41,6 +41,5 @@ jobs:
             gh issue edit $ISSUE_NUMBER --add-label "suggestion"
           
           else
-            gh issue comment $ISSUE_NUMBER --body "Thanks for your input! We will review the details."
-            gh issue edit $ISSUE_NUMBER --add-label "needs review"
+            echo "Invalid selection for 'willing_to_contribute' : $WILLING_TO_CONTRIBUTE"
           fi
