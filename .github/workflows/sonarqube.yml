@@ -35,7 +35,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_ORG: ${{ secrets.SONAR_ORG }}
-        run: mvn -B verify sonar:sonar \
-          -Dsonar.organization=${{ secrets.SONAR_ORG }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=INFOM126-Automated-Software-Engineering_2048-groupe-02
