@@ -37,4 +37,5 @@ jobs:
           SONAR_ORG: ${{ secrets.SONAR_ORG }}
         run: mvn -B verify sonar:sonar \
           -Dsonar.organization=${{ secrets.SONAR_ORG }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.projectKey=INFOM126-Automated-Software-Engineering_2048-groupe-02
