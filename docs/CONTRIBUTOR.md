@@ -8,7 +8,7 @@ Utilisez si possible les préfixes de branches suivants:
 - ```refactoring/```: pour reformater et nettoyer le code,
 - ```issue/```: pour répondre aux issues soulevées,
 - ```docs/```: pour mettre à jour la documentation.
-- 
+
 Créez votre branche à partir de la branche ```main``` et fusionnez-là lorsque vous avez terminé votre contribution.
 
 Une branche doit être approuvée par un autre développeur et doit passer les tests de non-régression avant d'être fusionnée.
