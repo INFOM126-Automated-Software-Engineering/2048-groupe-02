@@ -2,7 +2,7 @@
 
 Donnez un nom descriptif mais concis à vos branches. Essayez de vous en tenir aux minuscules et utilisez des traits d'union pour séparer les mots. Par exemple, ``` test/move-tile ```.
 
-Utilisez les préfixes de branches suivants:
+Préférez utiliser les préfixes de branches suivants:
 - ```feature/```: pour ajouter des nouvelles fonctionnalités,
 - ```test/```: pour ajouter des tests,
 - ```refactoring/```: pour reformater et nettoyer le code,
