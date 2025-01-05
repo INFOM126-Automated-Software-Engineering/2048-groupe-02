@@ -51,7 +51,7 @@ You can enjoy 2048 using any of the following methods:
      ```
    - Navigate into the project directory:
      ```bash
-     cd 2048-Groupe-02
+     cd 2048-groupe-02
      ```
    - Build the project using Maven:
      ```bash
