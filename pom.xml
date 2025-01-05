@@ -42,6 +42,23 @@
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <configLocation>sun_checks.xml</configLocation>
+        </configuration>
+        <executions>
+          <execution>
+            <id>sun-check-style</id>
+            <goals>
+                <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.10</version> <!-- Use the latest version -->
