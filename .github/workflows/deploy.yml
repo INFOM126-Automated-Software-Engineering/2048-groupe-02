@@ -40,13 +40,13 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          IMAGE_NAME="yourdockerhubusername/your-app-name"
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/2048"
           TAG=${{ env.version }}
           docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
 
       - name: Push Docker Image
         run: |
-          IMAGE_NAME="yourdockerhubusername/your-app-name"
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/2048"
           TAG=${{ env.version }}
           docker push $IMAGE_NAME:$TAG
           docker push $IMAGE_NAME:latest
