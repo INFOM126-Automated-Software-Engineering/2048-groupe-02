@@ -63,7 +63,60 @@ jobs:
 
           # Add test metrics to metrics file
           echo "Test Duration: ${TEST_DURATION}s" >> metrics.txt
-          
+    
+
+       # Here we send an email to the team leader as a warning notification where there is an abnormal amount of issues.
+
+      #- name: Check Bug Issues Opened in Last 3 Days and Send Email if Necessary
+      #  run: |
+      #    # Get the current date in Unix timestamp format
+      #    CURRENT_DATE=$(date +%s)
+      #
+      #    # Calculate the timestamp for 3 days ago
+      #    THREE_DAYS_AGO=$(($CURRENT_DATE - 3 * 24 * 60 * 60))
+      #
+      #    # Fetch issues tagged with "bug" that were opened in the last 3 days
+      #    BUG_ISSUES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues?labels=bug&state=open" \
+      #      | jq --arg THREE_DAYS_AGO "$THREE_DAYS_AGO" '[.[] | select(.created_at | fromdateiso8601 >= ($THREE_DAYS_AGO | tonumber))]')
+      #
+      #    # Count the number of issues that match the criteria
+      #    OPEN_BUG_ISSUES=$(echo "$BUG_ISSUES" | jq 'length')
+      #
+      #    # Define a threshold for the number of issues
+      #    ISSUE_THRESHOLD=20
+      #
+      #    echo "Open Bug Issues in the last 3 days: $OPEN_BUG_ISSUES"
+      #
+      #    # If the open bug issues exceed the threshold, send an email
+      #    if [ "$OPEN_BUG_ISSUES" -gt "$ISSUE_THRESHOLD" ]; then
+      #      WARNING_MSG="⚠️ Warning: There are $OPEN_BUG_ISSUES open 'bug' issues in this repository in the last 3 days, which exceeds the threshold of $ISSUE_THRESHOLD. Please review and address them."
+      #
+      #      # Install msmtp
+      #      sudo apt-get update
+      #      sudo apt-get install msmtp -y
+      #
+      #      # Create msmtp configuration
+      #      echo "defaults
+      #      auth on
+      #      tls on
+      #      tls_starttls on
+      #      logfile ~/.msmtp.log
+      #
+      #      # Gmail SMTP configuration
+      #      account gmail
+      #      host smtp.gmail.com
+      #      port 587
+      #      from your-email@gmail.com
+      #      user your-email@gmail.com
+      #      password ${{ secrets.SMTP_PASSWORD }}
+      #
+      #      account default : gmail" > ~/.msmtprc
+      #
+      #      chmod 600 ~/.msmtprc
+      #
+      #      # Send the email using msmtp
+      #      echo -e "Subject: Repository Health Warning: Too Many Open 'Bug' Issues in the Last 3 Days\n\n$WARNING_MSG" | msmtp recipient@example.com
+      #    fi
 
       - name: Upload Metrics Artifact
         uses: actions/upload-artifact@v3
