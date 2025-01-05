@@ -60,7 +60,7 @@ You can enjoy 2048 using any of the following methods:
      ```
    - Launch the game:
      ```bash
-     java -jar target/2048-***.jar
+     java -jar target/app-*.*.*.jar
      ```
 ---
 
