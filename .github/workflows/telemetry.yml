@@ -58,7 +58,13 @@ jobs:
           mvn test
           TEST_END_TIME=$(date +%s)
           TEST_DURATION=$((TEST_END_TIME - TEST_START_TIME))
+
+          echo "TEST_DURATION=$TEST_DURATION" >> $GITHUB_ENV
+
+          # Add test metrics to metrics file
+          echo "Test Duration: ${TEST_DURATION}s" >> metrics.txt
           
+
       - name: Upload Metrics Artifact
         uses: actions/upload-artifact@v3
         with:
