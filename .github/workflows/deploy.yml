@@ -50,3 +50,4 @@ jobs:
           TAG=${{ env.version }}
           docker push $IMAGE_NAME:$TAG
           docker push $IMAGE_NAME:latest
+
