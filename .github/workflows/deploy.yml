@@ -23,7 +23,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
+          
+      - name: Build
+        run: mvn --batch-mode clean package
+        
       - name: Determine Version from Branch Name
         id: version
         run: |
