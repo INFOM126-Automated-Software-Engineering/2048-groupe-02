@@ -23,15 +23,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { context } = require('@actions/github');
+            const { ctxt } = require('@actions/github');
 
             const team = 'ReviewersGR12';
 
-            const prNumber = context.payload.pull_request.number;
+            const prNumber = ctxt.payload.pull_request.number;
 
             await github.rest.pulls.requestReviewers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: ctxt.repo.owner,
+              repo: ctxt.repo.repo,
               pull_number: prNumber,
               team_reviewers: [team],
             });
