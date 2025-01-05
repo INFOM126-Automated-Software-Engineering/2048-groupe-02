@@ -1,2 +1,80 @@
-  on:
-  jobs:
+name: Telemetry Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+      - 'feature/**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  telemetry:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build Project
+        run: |
+          START_TIME=$(date +%s)
+          mvn clean package
+          END_TIME=$(date +%s)
+          BUILD_DURATION=$((END_TIME - START_TIME))
+          echo "BUILD_DURATION=$BUILD_DURATION" >> $GITHUB_ENV
+
+      - name: Collect System Metrics
+        id: metrics
+        run: |
+          MEMORY_USAGE=$(free -m | awk '/Mem:/ { print $3 }')
+          CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+          echo "MEMORY_USAGE=$MEMORY_USAGE" >> $GITHUB_ENV
+          echo "CPU_USAGE=$CPU_USAGE" >> $GITHUB_ENV
+
+          # Create metrics file
+          echo "Build Duration: ${BUILD_DURATION}s" > metrics.txt
+          echo "Memory Usage: ${MEMORY_USAGE} MB" >> metrics.txt
+          echo "CPU Usage: ${CPU_USAGE}%" >> metrics.txt
+
+      - name: Run Tests and Collect Test Metrics
+        run: |
+          TEST_START_TIME=$(date +%s)
+          mvn test
+          TEST_END_TIME=$(date +%s)
+          TEST_DURATION=$((TEST_END_TIME - TEST_START_TIME))
+          
+          # Get test results
+          TEST_RESULTS=$(mvn test -q -Dtest)
+          PASSED_TESTS=$(echo "$TEST_RESULTS" | grep -o 'PASS' | wc -l)
+          TOTAL_TESTS=$(echo "$TEST_RESULTS" | grep -o 'Tests run' | awk '{print $3}')
+          
+          echo "TEST_DURATION=$TEST_DURATION" >> $GITHUB_ENV
+          echo "PASSED_TESTS=$PASSED_TESTS" >> $GITHUB_ENV
+          echo "TOTAL_TESTS=$TOTAL_TESTS" >> $GITHUB_ENV
+
+          # Add test metrics to metrics file
+          echo "Test Duration: ${TEST_DURATION}s" >> metrics.txt
+          echo "Tests Passed: ${PASSED_TESTS}" >> metrics.txt
+          echo "Total Tests: ${TOTAL_TESTS}" >> metrics.txt
+
+      - name: Upload Metrics Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: telemetry-metrics
+          path: metrics.txt
