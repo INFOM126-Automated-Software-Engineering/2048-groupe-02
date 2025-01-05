@@ -1,17 +1,22 @@
-# Branch management policy
+# Git Branch Management
+Our 2048 project follows a well-known branching strategy.
 
-Donnez un nom descriptif mais concis à vos branches. Essayez de vous en tenir aux minuscules et utilisez des traits d'union pour séparer les mots. Par exemple, ``` test/move-tile ```.
-
-Utilisez si possible les préfixes de branches suivants:
-- ```feature/```: pour ajouter des nouvelles fonctionnalités,
-- ```test/```: pour ajouter des tests,
-- ```refactoring/```: pour reformater et nettoyer le code,
-- ```issue/```: pour répondre aux issues soulevées,
-- ```docs/```: pour mettre à jour la documentation.
-
-Créez votre branche à partir de la branche ```main``` et fusionnez-là lorsque vous avez terminé votre contribution.
-
-Une branche doit être approuvée par un autre développeur et doit passer les tests de non-régression avant d'être fusionnée.
+- Main Branches:
+   - ```main``` - Production code.
+   - ``develop`` - Main development branch.
+- Other Branches:
+    - ```feature/``` - Feature branches (e.g., ``feature/user-authentification``). When answering an issue, a feature branch
+    with the name ``feature/issue-name`` should be created.
+    - ```test/``` - Testing branches. Where tests are added.
+    - ```release/``` - Release branches (e.g., ``release/1.3.5``).
+    - ```hotfix/``` - Emergency fixes for production (e.g., ``hotfix/security-patch``).
+    - ```docs/``` - To update the documentation. 
+- Branch Flow
+  - Development work happens in ``feature/*`` branches created from ``develop``.
+  - Features are merged into ``develop`` via Pull Requests.
+  - Release branches are created from ``develop`` as ``release/*``.
+  - After testing, ``release`` branches are merged into both ``main`` and ``develop``.
+  - Hotfix branches are created from ``main`` and merged back to both ``main`` and ``develop``.
 
 # Commit messages conventions to respect
 
