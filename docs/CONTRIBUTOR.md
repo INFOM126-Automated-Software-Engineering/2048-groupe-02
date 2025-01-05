@@ -69,24 +69,36 @@ Our 2048 project follows a well-known branching strategy.
   6. Wrap body at 72 characters
   7. Use body to explain what and why vs. how
 
+# How to contribute code
+If you are an open-source developer, your help is greatly appreciated! We also encourage you to contribute as it 
+can help you in your own development.
+### Proposing feature ideas
+1. Open a new Issue in the Issue section on the repository and select the ``Feature Request`` template.
+2. Fill the template in a clear and concise way.
+3. Submit your request.
+### Contributing Code
+1. Fork and Clone the repository locally.
+2. Select a ``feature`` branch that correspond to an issue. (The feature branches are created when an issue has
+been reviewed and is judged correct for implementation).
+3. Respect the code convention (see below).
+4. Don't forget the tests. Create unit tests to ensure that your code works as its supposed.
+5. Commit and Push your changes. Respect the commit message policy mentioned below.
+6. Create a pull request to merge into the ``develop`` branch.
+7. CI/CD will be actioned by your pull request.
+8. Other contributors or code owners will review your pull request. If they agree with your changes, it will be merged
+in the ``develop`` branch.
+
 # Code conventions to respect
 
 Respect Sun's Java Style Guide to keep the codebase consistent and readable.
 
 # Release policy
-
 ## Release pattern
-
-## Release frequency
-### Versioning
-
 Given a version number MAJOR.MINOR.PATCH, increment the:
 
 - MAJOR version when you make incompatible API changes,
 - MINOR version when you add functionality in a backwards compatible manner, and
 - PATCH version when you make backwards compatible bug fixes.
 
-
-
-
-
+## Release frequency
+A new release is created via the CI/CD when a release branch is merged to the main branch.
