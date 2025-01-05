@@ -22,6 +22,8 @@ You can enjoy 2048 using any of the following methods:
      docker pull simolin179/2048
      ```
    - Run the container and connect it to your system's X11 server for GUI rendering
+  > **Note**: For graphical applications like 2048, an X11 server is required to render the GUI. Ensure your host system is configured properly to support X11 forwarding.
+
 
 #### On Windows:
    - Install an X11 server like [VcXsrv](https://sourceforge.net/projects/vcxsrv/).
@@ -41,9 +43,6 @@ You can enjoy 2048 using any of the following methods:
      ```bash
      docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix simolin179/2048
      ```
-
-> **Note**: For graphical applications like 2048, an X11 server is required to render the GUI. Ensure your host system is configured properly to support X11 forwarding.
-
 ### 3. **Build the Game Locally**
    - Ensure you have Maven installed on your system.
    - Clone the project repository:
