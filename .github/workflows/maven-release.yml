@@ -16,6 +16,30 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Determine version
+        id: version
+        run: |
+          # Assume that the version is set from the tag, like v1.0.0, v2.1.3, etc.
+          VERSION=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')  # Get branch name (e.g., "main", "release/1.0.0")
+          # If the branch starts with "release/", extract version (e.g., "release/1.0.0" becomes "1.0.0")
+          if [[ $VERSION =~ ^release\/([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+          else
+            echo "Branch does not follow the required 'release/major.minor.patch' format!"
+            exit 1
+          fi
+          echo "Version to be released: $VERSION"
+          echo "::set-output name=version::$VERSION"
+
+      - name: Create a new release tag
+        run: |
+          TAG="v${{ steps.version.outputs.version }}"
+          echo "Creating release tag: $TAG"
+          git tag "$TAG"
+          git push origin "$TAG"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -30,7 +54,7 @@ jobs:
         uses: actions/create-release@v1
         with:
           tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
+          release_name: Release v${{ steps.version.outputs.version }}
           body: "This release includes the latest changes."
           draft: false
           prerelease: false
@@ -44,5 +68,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/2048-1.0-SNAPSHOT.jar
-          asset_name: 2048-1.0-SNAPSHOT.jar
-          asset_content_type: application/octet-stream
+          asset_name: app-${{ steps.version.outputs.version }}.jar
+          asset_content_type: application/java-archive
