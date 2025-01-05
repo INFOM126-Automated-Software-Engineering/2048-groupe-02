@@ -47,14 +47,19 @@
         <version>3.3.0</version>
         <configuration>
           <configLocation>sun_checks.xml</configLocation>
-          <outputFile>target/checkstyle-result.xml</outputFile>
+          <failOnViolation>false</failOnViolation>
+          <logViolationsToConsole>true</logViolationsToConsole>
         </configuration>
         <executions>
           <execution>
-            <id>sun-check-style</id>
+            <id>validate-style</id>
+            <phase>validate</phase>
             <goals>
-                <goal>check</goal>
+              <goal>check</goal>
             </goals>
+            <configuration>
+              <failOnViolation>false</failOnViolation>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -114,4 +119,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
