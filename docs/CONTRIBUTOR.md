@@ -82,7 +82,7 @@ can help you in your own development.
 been reviewed and is judged correct for implementation).
 3. Respect the code convention (see below).
 4. Don't forget the tests. Create unit tests to ensure that your code works as its supposed.
-5. Commit and Push your changes. Respect the commit message policy mentioned below.
+5. Commit and Push your changes. Respect the commit message policy mentioned above.
 6. Create a pull request to merge into the ``develop`` branch.
 7. CI/CD will be actioned by your pull request.
 8. Other contributors or code owners will review your pull request. If they agree with your changes, it will be merged
