@@ -21,7 +21,7 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
-        java-version: '17' # Remplacez par la version Java de votre projet
+        java-version: '17'
         distribution: 'temurin'
 
     - name: Cache Maven packages
@@ -37,3 +37,9 @@ jobs:
 
     - name: Run Checkstyle
       run: mvn checkstyle:check
+
+    - name: Upload Checkstyle Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: checkstyle-report
+        path: target/checkstyle-result.xml
