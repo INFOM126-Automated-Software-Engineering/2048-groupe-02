@@ -59,19 +59,23 @@ jobs:
           TEST_END_TIME=$(date +%s)
           TEST_DURATION=$((TEST_END_TIME - TEST_START_TIME))
           
-          # Get test results
-          TEST_RESULTS=$(mvn test -q -Dtest)
-          PASSED_TESTS=$(echo "$TEST_RESULTS" | grep -o 'PASS' | wc -l)
-          TOTAL_TESTS=$(echo "$TEST_RESULTS" | grep -o 'Tests run' | awk '{print $3}')
+          JACOCO_REPORT="target/site/jacoco/index.html"
           
+          # Extract the number of tests from the JaCoCo report
+          TOTAL_TESTS=$(grep -oP 'Tests run: \K\d+' $JACOCO_REPORT)
+          PASSED_TESTS=$(grep -oP 'Tests passed: \K\d+' $JACOCO_REPORT)
+          COVERAGE_PERCENTAGE=$(grep -oP 'Coverage: \K[0-9.]+%' $JACOCO_REPORT)
+
           echo "TEST_DURATION=$TEST_DURATION" >> $GITHUB_ENV
           echo "PASSED_TESTS=$PASSED_TESTS" >> $GITHUB_ENV
           echo "TOTAL_TESTS=$TOTAL_TESTS" >> $GITHUB_ENV
+          echo "COVERAGE_PERCENTAGE=$COVERAGE_PERCENTAGE" >> $GITHUB_ENV
 
           # Add test metrics to metrics file
           echo "Test Duration: ${TEST_DURATION}s" >> metrics.txt
           echo "Tests Passed: ${PASSED_TESTS}" >> metrics.txt
           echo "Total Tests: ${TOTAL_TESTS}" >> metrics.txt
+          echo "Test Coverage: ${COVERAGE_PERCENTAGE}" >> metrics.txt
 
       - name: Upload Metrics Artifact
         uses: actions/upload-artifact@v3
