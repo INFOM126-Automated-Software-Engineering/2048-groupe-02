@@ -6,6 +6,7 @@ on:
       - develop
       - 'release/**'
       - 'feature/**'
+      - 'hotfix/*'
     types: [ opened, synchronize, reopened ]
 jobs:
   build:
