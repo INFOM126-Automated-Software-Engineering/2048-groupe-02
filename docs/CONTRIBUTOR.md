@@ -78,3 +78,5 @@ Respectez le Google Java Style Guide de manière à garder l'ensemble du code co
 ## Release pattern
 
 ## Release frequency
+
+
