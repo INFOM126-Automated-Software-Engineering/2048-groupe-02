@@ -1,2 +1,125 @@
-  on:
-  jobs:
+name: Telemetry Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+      - 'feature/**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  telemetry:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build Project
+        run: |
+          START_TIME=$(date +%s)
+          mvn clean package
+          END_TIME=$(date +%s)
+          BUILD_DURATION=$((END_TIME - START_TIME))
+          echo "BUILD_DURATION=$BUILD_DURATION" >> $GITHUB_ENV
+
+      - name: Collect System Metrics
+        id: metrics
+        run: |
+          MEMORY_USAGE=$(free -m | awk '/Mem:/ { print $3 }')
+          CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+          echo "MEMORY_USAGE=$MEMORY_USAGE" >> $GITHUB_ENV
+          echo "CPU_USAGE=$CPU_USAGE" >> $GITHUB_ENV
+
+          # Create metrics file
+          echo "Build Duration: ${BUILD_DURATION}s" > metrics.txt
+          echo "Memory Usage: ${MEMORY_USAGE} MB" >> metrics.txt
+          echo "CPU Usage: ${CPU_USAGE}%" >> metrics.txt
+
+      - name: Run Tests and Collect Test Metrics
+        run: |
+          TEST_START_TIME=$(date +%s)
+          mvn test
+          TEST_END_TIME=$(date +%s)
+          TEST_DURATION=$((TEST_END_TIME - TEST_START_TIME))
+
+          echo "TEST_DURATION=$TEST_DURATION" >> $GITHUB_ENV
+
+          # Add test metrics to metrics file
+          echo "Test Duration: ${TEST_DURATION}s" >> metrics.txt
+    
+
+       # Here we send an email to the team leader as a warning notification where there is an abnormal amount of issues.
+
+      #- name: Check Bug Issues Opened in Last 3 Days and Send Email if Necessary
+      #  run: |
+      #    # Get the current date in Unix timestamp format
+      #    CURRENT_DATE=$(date +%s)
+      #
+      #    # Calculate the timestamp for 3 days ago
+      #    THREE_DAYS_AGO=$(($CURRENT_DATE - 3 * 24 * 60 * 60))
+      #
+      #    # Fetch issues tagged with "bug" that were opened in the last 3 days
+      #    BUG_ISSUES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues?labels=bug&state=open" \
+      #      | jq --arg THREE_DAYS_AGO "$THREE_DAYS_AGO" '[.[] | select(.created_at | fromdateiso8601 >= ($THREE_DAYS_AGO | tonumber))]')
+      #
+      #    # Count the number of issues that match the criteria
+      #    OPEN_BUG_ISSUES=$(echo "$BUG_ISSUES" | jq 'length')
+      #
+      #    # Define a threshold for the number of issues
+      #    ISSUE_THRESHOLD=20
+      #
+      #    echo "Open Bug Issues in the last 3 days: $OPEN_BUG_ISSUES"
+      #
+      #    # If the open bug issues exceed the threshold, send an email
+      #    if [ "$OPEN_BUG_ISSUES" -gt "$ISSUE_THRESHOLD" ]; then
+      #      WARNING_MSG="⚠️ Warning: There are $OPEN_BUG_ISSUES open 'bug' issues in this repository in the last 3 days, which exceeds the threshold of $ISSUE_THRESHOLD. Please review and address them."
+      #
+      #      # Install msmtp
+      #      sudo apt-get update
+      #      sudo apt-get install msmtp -y
+      #
+      #      # Create msmtp configuration
+      #      echo "defaults
+      #      auth on
+      #      tls on
+      #      tls_starttls on
+      #      logfile ~/.msmtp.log
+      #
+      #      # Gmail SMTP configuration
+      #      account gmail
+      #      host smtp.gmail.com
+      #      port 587
+      #      from your-email@gmail.com
+      #      user your-email@gmail.com
+      #      password ${{ secrets.SMTP_PASSWORD }}
+      #
+      #      account default : gmail" > ~/.msmtprc
+      #
+      #      chmod 600 ~/.msmtprc
+      #
+      #      # Send the email using msmtp
+      #      echo -e "Subject: Repository Health Warning: Too Many Open 'Bug' Issues in the Last 3 Days\n\n$WARNING_MSG" | msmtp recipient@example.com
+      #    fi
+
+      - name: Upload Metrics Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: telemetry-metrics
+          path: metrics.txt
