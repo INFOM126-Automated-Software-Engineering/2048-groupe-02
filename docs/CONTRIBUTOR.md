@@ -13,9 +13,56 @@ Créez votre branche à partir de la branche ```main``` et fusionnez-là lorsque
 
 Une branche doit être approuvée par un autre développeur et doit passer les tests de non-régression avant d'être fusionnée.
 
-# Commit messages conventions to respect
+# Commit Message Convention
 
-Écrivez des commit messages clair et descriptif afin de posséder un historique compréhensible de vos changements.
+- Format:
+     ```
+    <type>(<scope>): <subject>
+    
+    [optional body]
+    
+    [optional footer(s)]
+    ```
+- Types:
+  - ``feat`` : New feature
+  - ``fix`` : Bug fix
+  - ``docs`` : Documentation changes
+  - ``style`` : Code style changes (formatting, missing semi-colons, etc)
+  - ``refactor`` : Code refactoring
+  - ``test`` : Adding or updating tests
+  - ``chore`` : Maintenance tasks
+  - ``ci`` : CI/CD related changes
+
+
+- Scope
+  - Module or component name (e.g., `auth`, `api`, `ui`)
+  - Optional, can be omitted
+
+
+- Subject
+  - Imperative mood ("add" not "added" or "adds")
+  - No capitalization
+  - No period at the end
+  - Maximum 50 characters
+
+
+- Examples
+    ```
+    feat(auth): add OAuth2 authentication
+    fix(api): handle null response from payment service
+    docs: update README with deployment instructions
+    test(user): add integration tests for user registration
+    ci(deploy): add staging environment deployment
+    ```
+
+- Best Practices
+  1. Keep commits atomic and focused
+  2. Write meaningful commit messages
+  3. Reference issue numbers in commit body or footer
+  4. Use imperative mood in subject line
+  5. Separate subject from body with a blank line
+  6. Wrap body at 72 characters
+  7. Use body to explain what and why vs. how
 
 # Code conventions to respect
 
