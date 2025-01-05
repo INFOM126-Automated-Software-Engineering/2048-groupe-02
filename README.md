@@ -61,6 +61,11 @@ You can enjoy 2048 using any of the following methods:
      ```bash
      java -jar target/app-*.*.*.jar
      ```
+  #### Have fun merging tiles and chasing the 2048 goal! 🎮
 ---
 
-Have fun merging tiles and chasing the 2048 goal! 🎮
+## Contributing
+Please refer to the [Contributor guide](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/blob/main/docs/CONTRIBUTOR.md) for guidelines on how to contribute to this project.
+
+## Contact
+For any questions or feedback, please open an [issue](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/issues/new/choose) or create a [discussion](https://github.com/INFOM126-Automated-Software-Engineering/2048-groupe-02/discussions/new/choose) on the repository.
