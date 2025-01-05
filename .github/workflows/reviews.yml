@@ -6,6 +6,9 @@ on:
       - opened
       - synchronize
       - reopened
+    branches:
+      - main
+      - develop
 
 jobs:
   auto-assign-reviewers:
